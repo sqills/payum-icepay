@@ -17,7 +17,7 @@
     ],
     "require": {
         "payum/core": "^1.3",
-        "icepay/api": "dev-master"
+        "sqills/icepay-api": "^0.2"
     },
     "require-dev": {
         "payum/core": "^1.3@dev",
