@@ -19,8 +19,8 @@ class IcepayGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'payum.factory_name' => 'skeleton',
-            'payum.factory_title' => 'skeleton',
+            'payum.factory_name' => 'icepay',
+            'payum.factory_title' => 'icepay',
             'payum.action.capture' => new CaptureAction(),
             'payum.action.authorize' => new AuthorizeAction(),
             'payum.action.refund' => new RefundAction(),
