@@ -6,6 +6,7 @@ use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
+use Payum\Core\GatewayInterface;
 use Payum\Icepay\Api;
 
 /**
@@ -18,6 +19,19 @@ abstract class BaseApiAwareAction implements ActionInterface, GatewayAwareInterf
     use GatewayAwareTrait;
     use ApiAwareTrait;
 
+    /**
+     * @var Api
+     */
+    protected $api;
+
+    /**
+     * @var GatewayInterface
+     */
+    protected $gateway;
+
+    /**
+     * BaseApiAwareAction constructor.
+     */
     public function __construct()
     {
         $this->apiClass = Api::class;

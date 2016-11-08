@@ -1,66 +1,83 @@
 <?php
+
+
 namespace Payum\Icepay;
 
-use Http\Message\MessageFactory;
-use Payum\Core\Exception\Http\HttpException;
-use Payum\Core\HttpClientInterface;
+use Icepay\API\Client;
 
-class Api
+/**
+ * Class Api
+ * @package Payum\Icepay
+ * @author Mark Pietrusinski <mark.pietrusinski@sqills.com>
+ */
+class Api extends Client
 {
     /**
-     * @var HttpClientInterface
+     * @var array
      */
-    protected $client;
-
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
+    protected $allowedPaymentMethods;
 
     /**
      * @var array
      */
-    protected $options = [];
+    protected $allowedIssuerCurrencies;
 
     /**
-     * @param array               $options
-     * @param HttpClientInterface $client
-     * @param MessageFactory      $messageFactory
-     *
-     * @throws \Payum\Core\Exception\InvalidArgumentException if an option is invalid
+     * @var array
      */
-    public function __construct(array $options, HttpClientInterface $client, MessageFactory $messageFactory)
-    {
-        $this->options = $options;
-        $this->client = $client;
-        $this->messageFactory = $messageFactory;
-    }
+    protected $allowedIssuerCountries;
 
     /**
-     * @param array $fields
-     *
      * @return array
      */
-    protected function doRequest($method, array $fields)
+    public function getAllowedPaymentMethods(): array
     {
-        $headers = [];
-
-        $request = $this->messageFactory->createRequest($method, $this->getApiEndpoint(), $headers, http_build_query($fields));
-
-        $response = $this->client->send($request);
-
-        if (false == ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300)) {
-            throw HttpException::factory($request, $response);
-        }
-
-        return $response;
+        return $this->allowedPaymentMethods;
     }
 
     /**
-     * @return string
+     * @param array $allowedPaymentMethods
+     * @return Api
      */
-    protected function getApiEndpoint()
+    public function setAllowedPaymentMethods($allowedPaymentMethods)
     {
-        return $this->options['sandbox'] ? 'http://sandbox.example.com' : 'http://example.com';
+        $this->allowedPaymentMethods = $allowedPaymentMethods;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedIssuerCurrencies(): array
+    {
+        return $this->allowedIssuerCurrencies;
+    }
+
+    /**
+     * @param array $allowedIssuerCurrencies
+     * @return Api
+     */
+    public function setAllowedIssuerCurrencies($allowedIssuerCurrencies)
+    {
+        $this->allowedIssuerCurrencies = $allowedIssuerCurrencies;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedIssuerCountries(): array
+    {
+        return $this->allowedIssuerCountries;
+    }
+
+    /**
+     * @param array $allowedIssuerCountries
+     * @return Api
+     */
+    public function setAllowedIssuerCountries($allowedIssuerCountries)
+    {
+        $this->allowedIssuerCountries = $allowedIssuerCountries;
+        return $this;
     }
 }
