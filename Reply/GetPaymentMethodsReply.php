@@ -18,7 +18,8 @@ class GetPaymentMethodsReply extends Base
     public $paymentMethods;
 
     /**
-     * @param ArrayCollection|PaymentMethod[] $getPaymentMethodsResponse
+     * @param ArrayCollection $paymentMethods
+     * @internal param ArrayCollection|PaymentMethod[] $getPaymentMethodsResponse
      */
     public function __construct(ArrayCollection $paymentMethods)
     {

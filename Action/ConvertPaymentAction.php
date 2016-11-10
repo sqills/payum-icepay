@@ -4,8 +4,8 @@ namespace Payum\Icepay\Action;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareTrait;
-use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Request\Convert;
+use Payum\Icepay\Model\PaymentInterface;
 
 class ConvertPaymentAction implements ActionInterface
 {
@@ -23,7 +23,19 @@ class ConvertPaymentAction implements ActionInterface
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
 
-        throw new \LogicException('Not implemented');
+        $request->setResult(
+            [
+                'Amount' => $payment->getTotalAmount(),
+                'Country' => $payment->getCountry(),
+                'Currency' => $payment->getCurrencyCode(),
+                'Description' => urlencode($payment->getDescription()),
+                'Issuer' => $payment->getIssuer(),
+                'Language' => $payment->getLanguage(),
+                'OrderID' => $payment->getOrder()->getId(),
+                'Paymentmethod' => $payment->getMethod(),
+                'Reference' => urlencode($payment->getId()),
+            ]
+        );
     }
 
     /**

@@ -33,7 +33,7 @@ class IcepayGatewayFactory extends GatewayFactory
 //            'payum.action.refund' => new RefundAction(),
 //            'payum.action.cancel' => new CancelAction(),
             'payum.action.notify' => new NotifyAction(),
-//            'payum.action.convert_payment' => new ConvertPaymentAction(),
+            'payum.action.convert_payment' => new ConvertPaymentAction(),
             'payum.action.status' => new StatusAction(),
         ]);
 
@@ -47,8 +47,8 @@ class IcepayGatewayFactory extends GatewayFactory
             $config['payum.required_options'] = [
                 'api_key',
                 'api_secret',
-                'default_complete_url',
-                'default_error_url'
+                'base_url',
+                'retry_url'
             ];
 
             $config['payum.api'] = function (ArrayObject $config) {
@@ -58,8 +58,8 @@ class IcepayGatewayFactory extends GatewayFactory
 
                 $api->setApiKey($config['api_key']);
                 $api->setApiSecret($config['api_secret']);
-                $api->setCompletedURL($config['default_complete_url']);
-                $api->setErrorURL($config['default_error_url']);
+                $api->setCompletedURL($config['base_url']);
+                $api->setErrorURL($config['base_url'] . $config['retry_url']);
 
                 $api->setAllowedPaymentMethods($config['allowed_payment_methods']);
                 $api->setAllowedIssuerCountries($config['allowed_issuer_countries']);
