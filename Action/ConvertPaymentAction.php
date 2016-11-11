@@ -28,12 +28,12 @@ class ConvertPaymentAction implements ActionInterface
                 'Amount' => $payment->getTotalAmount(),
                 'Country' => $payment->getCountry(),
                 'Currency' => $payment->getCurrencyCode(),
-                'Description' => urlencode($payment->getDescription()),
+                'Description' => $payment->getDescription(),
                 'Issuer' => $payment->getIssuer(),
                 'Language' => $payment->getLanguage(),
                 'OrderID' => $payment->getOrder()->getId(),
                 'Paymentmethod' => $payment->getMethod(),
-                'Reference' => urlencode($payment->getId()),
+                'Reference' => $payment->getId(),
             ]
         );
     }

@@ -42,10 +42,9 @@ class CaptureAction extends BaseApiAwareAction
             $redirect = $this->api->api_error_url;
         } else {
             $status->isCaptured();
-            $redirect = str_replace($checkout->PaymentScreenURL, ' ', '%20');
+            //remove the description from the returned PaymentScreenURL
+            $redirect = str_replace($model['Description'], '', $checkout->PaymentScreenURL);
         }
-
-        $this->gateway->execute(new GetHumanStatus($model));
 
         throw new HttpRedirect($redirect);
     }
