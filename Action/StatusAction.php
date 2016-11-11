@@ -19,9 +19,12 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        if ($model['checkout'] && isset($model['checkout']->Message)) {
-            $request->markFailed();
-
+        if ($model['checkoutResponse']) {
+            if (isset($model['checkoutResponse']->Message)) {
+                $request->markFailed();
+            } else {
+                $request->markCaptured();
+            }
         } else {
             $request->markNew();
         }

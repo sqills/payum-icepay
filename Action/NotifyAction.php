@@ -1,13 +1,15 @@
 <?php
 namespace Payum\Icepay\Action;
 
-use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\Bridge\Symfony\ReplyToSymfonyResponseConverter;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Notify;
+use Payum\Icepay\Action\Api\BaseApiAwareAction;
+use Payum\Icepay\Reply\NotifyReply;
 
-class NotifyAction implements ActionInterface
+class NotifyAction extends BaseApiAwareAction
 {
     use GatewayAwareTrait;
 
@@ -22,7 +24,12 @@ class NotifyAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        if ($model->get('PaymentID')) {
+            $response = $this->api->payment->getPayment(['PaymentID' => $model->get('PaymentID')]);
+            $model['getPaymentResponse'] = $response;
+
+            throw new NotifyReply($model);
+        }
     }
 
     /**
