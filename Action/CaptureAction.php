@@ -33,17 +33,21 @@ class CaptureAction extends BaseApiAwareAction
 
         $this->api->setCompletedURL($request->getToken()->getAfterUrl());
 
-        $checkout = $this->api->payment->checkOut($model);
-        $model['checkout'] = $checkout;
+        if (!isset($model['checkoutRequest'])) {
+            throw new \LogicException('missing checkou request for payment capture');
+        }
+
+        $checkoutResponse = $this->api->payment->checkOut($model['checkoutRequest']);
+        $model['checkoutResponse'] = $checkoutResponse;
 
         $status = new GetHumanStatus($model);
-        if (!isset($checkout->PaymentScreenURL)) {
+        if (!isset($checkoutResponse->PaymentScreenURL)) {
             $status->isFailed();
             $redirect = $this->api->api_error_url;
         } else {
             $status->isCaptured();
             //remove the description from the returned PaymentScreenURL
-            $redirect = str_replace($model['Description'], '', $checkout->PaymentScreenURL);
+            $redirect = str_replace($model['checkoutRequest']['Description'], '', $checkoutResponse->PaymentScreenURL);
         }
 
         throw new HttpRedirect($redirect);

@@ -23,8 +23,8 @@ class ConvertPaymentAction implements ActionInterface
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
 
-        $request->setResult(
-            [
+        $request->setResult([
+            'checkoutRequest' => [
                 'Amount' => $payment->getTotalAmount(),
                 'Country' => $payment->getCountry(),
                 'Currency' => $payment->getCurrencyCode(),
@@ -35,7 +35,7 @@ class ConvertPaymentAction implements ActionInterface
                 'Paymentmethod' => $payment->getMethod(),
                 'Reference' => $payment->getId(),
             ]
-        );
+        ]);
     }
 
     /**
