@@ -31,7 +31,7 @@ class ConvertPaymentAction implements ActionInterface
                 'Description' => $payment->getDescription(),
                 'Issuer' => $payment->getIssuer(),
                 'Language' => $payment->getLanguage(),
-                'OrderID' => $payment->getOrder()->getId(),
+                'OrderID' => uniqid($payment->getOrder()->getId() . '_'),
                 'Paymentmethod' => $payment->getMethod(),
                 'Reference' => $payment->getId(),
             ]
