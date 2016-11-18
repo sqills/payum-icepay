@@ -56,7 +56,7 @@ class IcepayGatewayFactory extends GatewayFactory
                 $config->validateNotEmpty($config['payum.required_options']);
 
                 $api = new Api();
-                if ($config['logger'] && $config['logger'] instanceof LoggerInterface) {
+                if (isset($config['logger']) && $config['logger'] instanceof LoggerInterface) {
                     $api->setLogger($config['logger']);
                 }
 
