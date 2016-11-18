@@ -11,6 +11,7 @@ use Payum\Icepay\Action\RefundAction;
 use Payum\Icepay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class IcepayGatewayFactory
@@ -55,6 +56,9 @@ class IcepayGatewayFactory extends GatewayFactory
                 $config->validateNotEmpty($config['payum.required_options']);
 
                 $api = new Api();
+                if ($config['logger'] && $config['logger'] instanceof LoggerInterface) {
+                    $api->setLogger($config['logger']);
+                }
 
                 $api->setApiKey($config['api_key']);
                 $api->setApiSecret($config['api_secret']);
