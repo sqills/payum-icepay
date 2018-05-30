@@ -138,7 +138,7 @@ class GetPaymentResponse
 
     /**
      * @Jms\SerializedName("Issuer")
-     * @Jms\Type("integer")
+     * @Jms\Type("string")
      *
      * @var string
      */
