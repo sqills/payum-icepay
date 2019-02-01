@@ -10,11 +10,6 @@ use Payum\Core\Model\PaymentInterface as BasePaymentInterface;
 interface PaymentInterface extends BasePaymentInterface
 {
     /**
-     * @return mixed
-     */
-    public function getId();
-
-    /**
      * @return string
      */
     public function getCountry();
@@ -38,4 +33,9 @@ interface PaymentInterface extends BasePaymentInterface
      * @return OrderInterface
      */
     public function getOrder();
+
+    /**
+     * @return null|string
+     */
+    public function getReference();
 }
